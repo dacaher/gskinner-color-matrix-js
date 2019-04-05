@@ -269,7 +269,16 @@ sprite.height = 384;
 
 // Apply filter
 const matrix = new ColorMatrix();
-matrix.adjustBrightness(0.5);
+//matrix.adjustSaturation(100);
+//matrix.adjustHue(180);
+//matrix.adjustBrightness(100);
+//matrix.adjustContrast(100);
+matrix.adjustColor(-76, -71, 33, 25);
+
+matrix[4] /= 255;
+matrix[9] /= 255;
+matrix[14] /= 255;
+matrix[19] /= 255;
 
 const filter = new PIXI.filters.ColorMatrixFilter();
 filter.matrix = matrix;
