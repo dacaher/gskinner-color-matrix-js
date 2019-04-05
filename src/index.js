@@ -64,17 +64,22 @@ class ColorMatrix extends Array {
      * @param {any} p_hue
      */
     adjustColor(p_brightness, p_contrast, p_saturation, p_hue) {
-        this.adjustHue(p_hue);
-        this.adjustContrast(p_contrast);
-        this.adjustBrightness(p_brightness);
-        this.adjustSaturation(p_saturation);
+        this._adjustHue(p_hue);
+        this._adjustContrast(p_contrast);
+        this._adjustBrightness(p_brightness);
+        this._adjustSaturation(p_saturation);
+
+        this[4] /= 255;
+        this[9] /= 255;
+        this[14] /= 255;
+        this[19] /= 255;
     }
 
     /**
      * Adjusts the brightness of the colour matrix
      * @param {any} p_val
      */
-    adjustBrightness(p_val) {
+    _adjustBrightness(p_val) {
         p_val = this.cleanValue(p_val, 100);
         if (p_val === 0 || isNaN(p_val)) {
             return;
@@ -92,7 +97,7 @@ class ColorMatrix extends Array {
      * Adjusts the contrast of the colour matrix
      * @param {any} p_val
      */
-    adjustContrast(p_val) {
+    _adjustContrast(p_val) {
         p_val = this.cleanValue(p_val, 100);
         if (p_val === 0 || isNaN(p_val))
         {
@@ -123,7 +128,7 @@ class ColorMatrix extends Array {
      * Adjusts the saturation of the colour matrix
      * @param {any} p_val
      */
-    adjustSaturation(p_val) {
+    _adjustSaturation(p_val) {
         p_val = this.cleanValue(p_val, 100);
         if (p_val === 0 || isNaN(p_val))
         {
@@ -146,7 +151,7 @@ class ColorMatrix extends Array {
      * Adjusts the hue of the colour matrix
      * @param {any} p_val
      */
-    adjustHue(p_val) {
+    _adjustHue(p_val) {
         p_val = this.cleanValue(p_val, 180) / 180 * Math.PI;
         if (p_val === 0 || isNaN(p_val))
         {
@@ -269,16 +274,11 @@ sprite.height = 384;
 
 // Apply filter
 const matrix = new ColorMatrix();
-//matrix.adjustSaturation(100);
-//matrix.adjustHue(180);
-//matrix.adjustBrightness(100);
-//matrix.adjustContrast(100);
-matrix.adjustColor(-76, -71, 33, 25);
-
-matrix[4] /= 255;
-matrix[9] /= 255;
-matrix[14] /= 255;
-matrix[19] /= 255;
+//matrix._adjustSaturation(100);
+//matrix._adjustHue(180);
+//matrix._adjustBrightness(100);
+//matrix._adjustContrast(100);
+matrix.adjustColor(-76, -71, -33, -25);
 
 const filter = new PIXI.filters.ColorMatrixFilter();
 filter.matrix = matrix;
